@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableAlert · Полное меню</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fcfaf7;
+            color: #2d2a24;
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-weight: 300;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a3f36;
+        }
+        .subtitle {
+            text-align: center;
+            color: #8b7a6b;
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+        .menu-section {
+            margin-bottom: 60px;
+        }
+        h2 {
+            font-weight: 400;
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            border-bottom: 1px solid #e2d8d0;
+            padding-bottom: 8px;
+            color: #4a3f36;
+        }
+        h3 {
+            font-weight: 400;
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: #5e4a3a;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px 30px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd5ce;
+        }
+        .item-name {
+            font-size: 1.1rem;
+            color: #2d2a24;
+            font-weight: 400;
+        }
+        .item-desc {
+            font-size: 0.9rem;
+            color: #8b7a6b;
+            margin-top: 2px;
+        }
+        .item-price {
+            font-size: 1.1rem;
+            color: #5e4a3a;
+            font-weight: 400;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+        .wine-note {
+            font-size: 0.85rem;
+            color: #a7896d;
+            margin-left: 10px;
+            font-weight: 300;
+        }
+        .back-link {
+            display: block;
+            margin-top: 60px;
+            text-align: center;
+        }
+        a {
+            color: #5e4a3a;
+            text-decoration: none;
+            border-bottom: 1px solid #d4bcab;
+            padding-bottom: 2px;
+        }
+        a:hover {
+            color: #3f2e24;
+        }
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            color: #9b8d81;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>TableAlert</h1>
+    <div class="subtitle">итальянское бистро · Нижнекамск</div>
+
+    <!-- Антипасти (закуски) -->
+    <div class="menu-section">
+        <h2>Антипасти</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Антипасти (ассорти мясное/сырное)</span> <span class="item-price">980 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Вителло тоннато (телятина с тунцовым соусом)</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Цукини с пармезаном и фисташками</span> <span class="item-price">650 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Хумус с баклажаном и томатами</span> <span class="item-price">590 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Тапенада из тунца</span> <span class="item-price">720 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Тапенада из оливок</span> <span class="item-price">580 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Анчоусы с томатами и сыром фета</span> <span class="item-price">690 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Перец рамиро с артишоками, соусом тоннато</span> <span class="item-price">690 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Рикотта с оливками, миндалём и чипсами из пармезана</span> <span class="item-price">580 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Сливочный риет из лосося и трески, с маринованным фенхелем</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Брускетта с томатами и базиликом</span> <span class="item-price">450 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Карпаччо из говядины с рукколой и пармезаном</span> <span class="item-price">990 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Паста и ризотто -->
+    <div class="menu-section">
+        <h2>Паста и ризотто</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Спагетти карбонара</span> <span class="item-price">720 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Паста болоньезе</span> <span class="item-price">750 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Лазанья классическая</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Тальятелле с грибами и трюфельным маслом</span> <span class="item-price">990 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Равиоли с рикоттой и шпинатом</span> <span class="item-price">820 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Ризотто с морепродуктами</span> <span class="item-price">1100 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Ризотто с белыми грибами</span> <span class="item-price">950 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Паста с креветками и черри</span> <span class="item-price">1250 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Горячие блюда -->
+    <div class="menu-section">
+        <h2>Горячие блюда</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Стейк из лосося с овощами гриль</span> <span class="item-price">1450 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Цыплёнок под соусом из белых грибов</span> <span class="item-price">980 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Телятина с полентой и соусом бароло</span> <span class="item-price">1890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Свиная рулька, запечённая с мёдом и розмарином</span> <span class="item-price">1350 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Сибас на гриле с лимоном и тимьяном</span> <span class="item-price">1550 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Овощное рагу с пармезаном</span> <span class="item-price">690 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Каши и завтраки -->
+    <div class="menu-section">
+        <h2>Каши и завтраки</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Каша овсяная с солёной карамелью и фисташкой</span> <span class="item-price">600 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Каша кукурузная со страчателлой и конфитюром из чёрной смородины</span> <span class="item-price">600 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Тост с красной икрой на тартине</span> <span class="item-price">1700 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Завтрак Avero mio (яйцо пашот, авокадо, лосось)</span> <span class="item-price">1600 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Английский завтрак (яичница, бекон, сосиски, фасоль)</span> <span class="item-price">1400 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Скрэмбл с лососем и сливочным сыром</span> <span class="item-price">990 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Десерты -->
+    <div class="menu-section">
+        <h2>Десерты</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Тирамису классический</span> <span class="item-price">580 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Панна-котта с ягодным соусом</span> <span class="item-price">520 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Чизкейк Нью-Йорк</span> <span class="item-price">550 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Шоколадный фондан с мороженым</span> <span class="item-price">620 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Канноли с рикоттой и фисташками</span> <span class="item-price">490 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Сорбет (лимон/малина)</span> <span class="item-price">350 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Детское меню (НОВОЕ) -->
+    <div class="menu-section">
+        <h2>Детское меню</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Макароны с сыром</span> <span class="item-price">450 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Куриные наггетсы с картофельным пюре</span> <span class="item-price">520 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Маленькая пицца «Маргарита»</span> <span class="item-price">490 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Сырники с вареньем (3 шт.)</span> <span class="item-price">390 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Блинчики с ягодами</span> <span class="item-price">420 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Мороженое (шарик) с шоколадной посыпкой</span> <span class="item-price">350 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Безалкогольные напитки -->
+    <div class="menu-section">
+        <h2>Безалкогольные напитки</h2>
+        <h3>Лимонады (400 мл)</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Гранат · Каркаде · Лемонграсс</span> <span class="item-price">700 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Грейпфрут · Сенча · Жасмин</span> <span class="item-price">700 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Алоэ · Груша</span> <span class="item-price">700 ₽</span></div>
+        </div>
+        <h3>Безалкогольные коктейли</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Italian spritz (без алкоголя)</span> <span class="item-price">1200 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Clover club (без алкоголя)</span> <span class="item-price">800 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Мохито безалкогольный</span> <span class="item-price">650 ₽</span></div>
+        </div>
+        <h3>Соки и вода</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Соки ZUEEG (яблоко, апельсин, вишня, томат)</span> <span class="item-price">500 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Вода Недра 750 мл (газ/без)</span> <span class="item-price">850 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Аква Русса 500 мл (газ/без)</span> <span class="item-price">450 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Сан Бенедетто 750 мл (газ/без)</span> <span class="item-price">800 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Кока-Кола/Кола зеро/Тоник</span> <span class="item-price">550 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Алкогольные коктейли -->
+    <div class="menu-section">
+        <h2>Алкогольные коктейли</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Мохито классический (белый ром, лайм, мята)</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Лонг-Айленд (водка, джин, ром, текила, трипл-сек)</span> <span class="item-price">1200 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Маргарита (текила, трипл-сек, лайм)</span> <span class="item-price">850 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Негрони (джин, кампари, вермут)</span> <span class="item-price">990 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Апероль Шприц (апероль, просекко, содовая)</span> <span class="item-price">1100 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Пина Колада (ром, кокосовое молоко, ананас)</span> <span class="item-price">950 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Виски-сауэр (бурбон, лимон, сахар, белок)</span> <span class="item-price">980 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Дайкири (ром, лайм, сахар)</span> <span class="item-price">820 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Космополитен (водка, клюква, лайм, трипл-сек)</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Бульвардье (бурбон, кампари, вермут)</span> <span class="item-price">1050 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Пиво -->
+    <div class="menu-section">
+        <h2>Пиво</h2>
+        <h3>Разливное (0,5 л)</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Чешский светлый лагер (Krušovice)</span> <span class="item-price">650 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Немецкий пшеничный (Weihenstephan)</span> <span class="item-price">720 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Бельгийский блонд эль (Duvel)</span> <span class="item-price">890 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Тёмное нефильтрованное (Guinness)</span> <span class="item-price">790 ₽</span></div>
+        </div>
+        <h3>Бутылочное (0,33 / 0,5 л)</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Corona Extra (Мексика) 0,33</span> <span class="item-price">650 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Hoegaarden White 0,5</span> <span class="item-price">750 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Leffe Blonde 0,33</span> <span class="item-price">690 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Krusovice Imperial 0,5</span> <span class="item-price">620 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Балтика №7 (Россия) 0,5</span> <span class="item-price">350 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Вино -->
+    <div class="menu-section">
+        <h2>Вино</h2>
+        <h3>Красные</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Кьянти Классико (Италия, Тоскана) бокал/бутылка</span> <span class="item-price">650 / 3200 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Барбареско (Piedmont) бокал/бутылка</span> <span class="item-price">990 / 4800 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Каберне Совиньон (Чили) бокал/бутылка</span> <span class="item-price">450 / 2100 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Пино Нуар (Новая Зеландия) бокал/бутылка</span> <span class="item-price">590 / 2900 ₽</span></div>
+        </div>
+        <h3>Белые</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Соаве (Италия) бокал/бутылка</span> <span class="item-price">520 / 2400 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Шардоне (Франция, бургундия) бокал/бутылка</span> <span class="item-price">790 / 3600 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Совиньон Блан (Новая Зеландия) бокал/бутылка</span> <span class="item-price">690 / 3200 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Рислинг (Германия) бокал/бутылка</span> <span class="item-price">550 / 2600 ₽</span></div>
+        </div>
+        <h3>Игристые</h3>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Просекко (Италия) бокал/бутылка</span> <span class="item-price">490 / 2200 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Шампанское Moët & Chandon Brut 0,75</span> <span class="item-price">9900 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Ламбруско (красное полусладкое) 0,75</span> <span class="item-price">2100 ₽</span></div>
+        </div>
+    </div>
+
+    <!-- Крепкий алкоголь -->
+    <div class="menu-section">
+        <h2>Крепкий алкоголь</h2>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Водка (Россия) 50 мл</span> <span class="item-price">350 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Джин (Bombay Sapphire) 50 мл</span> <span class="item-price">450 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Виски (Jack Daniels) 50 мл</span> <span class="item-price">490 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Ром (Bacardi) 50 мл</span> <span class="item-price">420 ₽</span></div>
+            <div class="menu-item"><span class="item-name">Текила (Olmeca) 50 мл</span> <span class="item-price">430 ₽</span></div>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a href="/">← Вернуться на главную</a>
+    </div>
+    <div class="footer-note">
+        Цены указаны в рублях, включая НДС. Вино подаётся как по бокалам (150 мл), так и в бутылках.
+    </div>
+</body>
+</html>
