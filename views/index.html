@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableAlert · итальянское бистро в Нижнекамске</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:#fcfaf7; color:#2d2a24; line-height:1.5; }
+        .container { max-width:1200px; margin:0 auto; padding:0 24px; }
+
+        /* ---------- ШАПКА ---------- */
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; position: relative; flex-wrap: wrap; }
+        .logo-area { display: flex; align-items: center; }
+        .logo-img { max-width:120px; height:auto; cursor:pointer; }
+        .nav-icons { display: flex; align-items: center; gap: 25px; }
+        .nav-item { position: relative; }
+        .icon-btn { background: none; border: none; font-size:1.5rem; color:#5e4a3a; cursor: pointer; padding:8px; transition:color 0.2s; }
+        .icon-btn:hover { color:#a5673f; }
+
+        /* ---------- ДРОПДАУНЫ ---------- */
+        .dropdown { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: white; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); padding: 24px; min-width: 260px; z-index: 1000; border: 1px solid #f0e4d8; display: none; }
+        .dropdown.active { display: block; }
+        .dropdown::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); border-width: 0 10px 10px 10px; border-style: solid; border-color: transparent transparent white transparent; filter: drop-shadow(0 -4px 4px rgba(0,0,0,0.05)); }
+        .menu-dropdown a { display: block; padding: 12px 16px; text-decoration: none; color: #4a3f36; font-weight: 400; border-radius: 40px; transition: background 0.2s; }
+        .menu-dropdown a:hover { background: #f6f1eb; }
+
+        /* ---------- ПРОФИЛЬ ---------- */
+        .profile-dropdown .auth-form input { width:100%; padding:12px 16px; margin:8px 0; border:2px solid #ebdad0; border-radius:40px; font-family:'Inter',sans-serif; font-size:1rem; outline:none; }
+        .profile-dropdown .auth-form input:focus { border-color:#a5673f; }
+        .profile-dropdown button { background:#5e4a3a; color:white; border:none; padding:12px 24px; border-radius:40px; font-size:1rem; cursor:pointer; width:100%; margin:8px 0; transition:background 0.2s; }
+        .profile-dropdown button:hover { background:#7a604c; }
+        .code-input-group { display:flex; gap:10px; }
+        .code-input-group input { flex:2; }
+        .code-input-group button { flex:1; margin:0; }
+        .user-greeting { text-align:center; margin-bottom:16px; font-weight:500; }
+        .user-greeting i { font-size:2rem; color:#a5673f; display:block; margin-bottom:8px; }
+        .reservations-list { max-height:300px; overflow-y:auto; margin:16px 0; }
+        .reservation-item { background:#f9f5f0; border-radius:16px; padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; }
+        .cancel-res-btn { background:#f1e2de; color:#a5433a; border:none; border-radius:30px; padding:6px 12px; font-size:0.8rem; cursor:pointer; }
+        .logout-btn { background:transparent !important; color:#5e4a3a !important; border:2px solid #ebdad0 !important; }
+        .logout-btn:hover { background:#ebdad0 !important; }
+
+        /* ---------- ОСНОВНОЙ КОНТЕНТ ---------- */
+        .philosophy { background-image: url('Нижнекамск.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; margin: 0; padding: 60px 0; position: relative; }
+        .philosophy-inner { max-width: 760px; margin: 0 auto; padding: 0 20px; background-color: rgba(255, 255, 255, 0.85); border-radius: 32px; text-align: center; }
+        .philosophy h2 { font-size:2rem; font-weight:300; margin-bottom:20px; color:#4a3f36; }
+        .philosophy p { font-size:1.1rem; color:#5f5348; font-weight:300; line-height:1.6; }
+        .philosophy .author { margin-top:24px; font-style:italic; color:#a7896d; }
+
+        .section-title { font-size:2rem; font-weight:300; text-align:center; margin-bottom:48px; color:#4a3f36; position:relative; }
+        .section-title::after { content:''; display:block; width:60px; height:1px; background:#c7b5a5; margin:16px auto 0; }
+
+        .team-section, .layout-section { margin:80px 0; }
+        .team-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:40px 30px; margin-top:40px; }
+        .team-card { cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .team-card:hover { transform: translateY(-8px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+        .team-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .team-card h3 { font-size:1.4rem; font-weight:450; margin-bottom:4px; color:#3f332b; }
+        .team-card .role { font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; color:#b29782; margin-bottom:14px; font-weight:400; }
+        .team-card .description { font-size:0.95rem; color:#655b52; font-weight:300; line-height:1.5; }
+
+        /* Модальное окно */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { max-width: 90%; max-height: 90%; background: white; border-radius: 32px; display: flex; flex-direction: column; align-items: center; padding: 20px; position: relative; overflow: auto; }
+        .modal-close { position: absolute; top: 15px; right: 25px; font-size: 2rem; cursor: pointer; color: #5e4a3a; }
+        .modal-img { max-width: 300px; border-radius: 50%; margin-bottom: 20px; }
+        .modal-info { text-align: center; }
+        .modal-info h3 { font-size: 1.8rem; margin-bottom: 8px; }
+        .modal-info .role { font-size: 1rem; color: #b29782; text-transform: uppercase; margin-bottom: 16px; }
+        .modal-info .description { font-size: 1rem; line-height: 1.5; max-width: 500px; }
+
+        /* Схема зала */
+        .layout-container { background:#f6f1eb; border-radius:48px; padding:48px 40px; text-align:center; }
+        .layout-svg { max-width:700px; margin:30px auto; display:block; }
+        .layout-legend { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; margin-top:30px; font-size:0.9rem; color:#5f5348; }
+        .legend-item { display:flex; align-items:center; gap:8px; }
+        .legend-dot { width:16px; height:16px; border-radius:4px; }
+        .legend-dot.table2 { background:#b29782; }
+        .legend-dot.table4 { background:#8f6e54; }
+        .legend-dot.table6 { background:#5e4a3a; }
+        .table-svg { cursor: pointer; transition: filter 0.2s, stroke 0.2s; }
+        .table-svg:hover { filter: brightness(0.95); stroke: #5e4a3a; stroke-width: 2; }
+        .table-svg.selected { stroke: #d4a373; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(212,163,115,0.5)); }
+
+        /* Форма бронирования */
+        .booking-section { background:#f6f1eb; border-radius:32px; padding:48px 50px; margin:80px 0 40px; }
+        .booking-form .form-group { margin-bottom:22px; }
+        .booking-form label { display:block; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.8px; color:#8b7a6b; margin-bottom:6px; }
+        .booking-form input, .booking-form select { width:100%; padding:12px 0; background:transparent; border:none; border-bottom:1px solid #d9cdc1; font-family:'Inter',sans-serif; font-size:1rem; color:#2d2a24; outline:none; }
+        .booking-form input:focus, .booking-form select:focus { border-bottom-color:#b29782; }
+        .guest-counter { display:flex; align-items:center; gap:16px; margin-top:8px; }
+        .guest-counter button { width:36px; height:36px; border-radius:50%; border:1px solid #d9cdc1; background:white; font-size:1.4rem; cursor:pointer; color:#5e4a3a; }
+        .guest-counter button:hover { background:#e7ddd3; }
+        .booking-form button[type="submit"] { background:#5e4a3a; color:white; border:none; padding:16px 32px; font-size:1.1rem; border-radius:40px; cursor:pointer; width:100%; margin-top:24px; }
+        .booking-form button[type="submit"]:hover { background:#7a604c; }
+        .privacy-note { font-size:0.75rem; color:#9b8d81; margin-top:16px; }
+        .auth-note { background:#f0f0e8; border-radius:16px; padding:10px 15px; margin:10px 0; font-size:0.9rem; border-left:3px solid #5e4a3a; }
+
+        /* Футер */
+        .footer-contacts { background: #f6f1eb; border-radius: 32px; padding: 40px 50px; margin: 40px 0 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 30px; color: #4f443b; }
+        .footer-contacts h4 { font-size: 1.2rem; font-weight: 500; margin-bottom: 16px; color: #3f332b; border-bottom: 1px solid #d9cdc1; padding-bottom: 8px; }
+        .footer-contacts p { margin: 12px 0; display: flex; align-items: center; gap: 12px; }
+        .footer-contacts i { width: 24px; color: #b29782; font-size: 1.2rem; }
+        .footer-contacts a { color: #8f6e54; text-decoration: none; border-bottom: 1px solid #d4bcab; }
+        .footer-contacts a:hover { color: #5e3f2f; }
+        .legal-info { font-size: 0.85rem; color: #9b8d81; margin-top: 20px; padding-top: 16px; border-top: 1px solid #ece3db; }
+        .footer { text-align: center; color: #9b8d81; font-size: 0.85rem; padding: 20px 0 40px; border-top: 1px solid #ece3db; }
+
+        .message { margin-top:30px; padding:16px 22px; border-radius:40px; font-weight:400; display:flex; align-items:center; gap:12px; }
+        .message.success { background:#e4ddd4; color:#2f5e3f; }
+        .message.error { background:#f1e2de; color:#a5433a; }
+
+        @media (max-width:700px) {
+            .booking-section { padding:30px 25px; }
+            .footer-contacts { grid-template-columns:1fr; padding:30px 25px; }
+            .team-grid { grid-template-columns:1fr; }
+            .layout-svg { width:100%; }
+        }
+        rect[data-table-id][data-available="true"]:hover { filter: brightness(0.95); transition: 0.1s; }
+        rect[data-table-id][data-available="false"] { cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА -->
+    <div class="header">
+        <div class="logo-area">
+            <img src="логотип.png" alt="TableAlert" class="logo-img" onclick="window.scrollTo({top:0, behavior:'smooth'});">
+        </div>
+        <div class="nav-icons">
+            <div class="nav-item">
+                <button class="icon-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown menu-dropdown" id="menuDropdown">
+                    <a href="#team" onclick="closeAllDropdowns(); smoothScroll('#team');">👥 Наша команда</a>
+                    <a href="#layout" onclick="closeAllDropdowns(); smoothScroll('#layout');">🗺️ Схема зала</a>
+                    <a href="#booking" onclick="closeAllDropdowns(); smoothScroll('#booking');">📅 Забронировать</a>
+                    <a href="menu.html" target="_blank" onclick="closeAllDropdowns();">🍽️ Полное меню</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="icon-btn" id="profileBtn"><i class="fas fa-user-circle"></i></button>
+                <div class="dropdown profile-dropdown" id="profileDropdown">
+                    <div id="authContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Философия -->
+    <div class="philosophy">
+        <div class="philosophy-inner">
+            <h2>TableAlert — это</h2>
+            <p>Место, где время обретает вкус... Здесь тесто поднимается медленно, как итальянский полдень. Здесь соус шепчет с помидорами, а моцарелла тает не спеша — как хорошие новости. Мы не готовим быстро: мы готовим по-домашнему!</p>
+            <div class="author">— Вдохновлено Нижнекамском</div>
+        </div>
+    </div>
+
+    <!-- КОМАНДА -->
+        <div class="team-section" id="team">
+            <h2 class="section-title">Наша команда</h2>
+            <div class="team-grid">
+                <div class="team-card" data-name="Алексей Воронов" data-role="Управляющий" data-description="Создаёт атмосферу и следит, чтобы каждый гость чувствовал себя как дома. За плечами — 12 лет в ресторанном бизнесе." data-image="АВ.jpg">
+    <div class="team-photo">
+        <img src="АВ.jpg" alt="Алексей Воронов">
+    </div>
+    <h3>Алексей Воронов</h3>
+    <div class="role">Управляющий</div>
+    <div class="description">Создаёт атмосферу и следит, чтобы каждый гость чувствовал себя как дома. За плечами — 12 лет в ресторанном бизнесе.</div>
+</div>
+<div class="team-card" data-name="Георгий Мартынов" data-role="Шеф-повар" data-description="Влюблён в итальянскую кухню, стажировался в Тоскане. Каждое блюдо — маленькое путешествие.
+" data-image="ГМ.jpg">
+    <div class="team-photo">
+        <img src="ГМ.jpg" alt="Георгий Мартынов">
+    </div>
+    <h3>Георгий Мартынов</h3>
+    <div class="role">Шеф-повар</div>
+    <div class="description">Влюблён в итальянскую кухню, стажировался в Тоскане. Каждое блюдо — маленькое путешествие.
+</div>
+</div>
+<div class="team-card" data-name="Дамир Калиев" data-role="Повар (горячий цех)" data-description="Мастер пасты и ризотто. Знает секрет идеального аль денте.
+" data-image="ДК.jpg">
+    <div class="team-photo">
+        <img src="ДК.jpg" alt="Дамир Калиев">
+    </div>
+    <h3>Дамир Калиев</h3>
+    <div class="role">Повар (горячий цех)</div>
+    <div class="description">Мастер пасты и ризотто. Знает секрет идеального аль денте.
+</div>
+</div>
+<div class="team-card" data-name="Алёна Викторова" data-role="Повар (холодный цех)" data-description="Создаёт закуски, которые хочется фотографировать. Её антипасти — произведение искусства.
+" data-image="АВЖ.jpg">
+    <div class="team-photo">
+        <img src="АВЖ.jpg" alt="Алёна Викторова">
+    </div>
+    <h3>Алёна Викторова</h3>
+    <div class="role">Повар (холодный цех)</div>
+    <div class="description">Создаёт закуски, которые хочется фотографировать. Её антипасти — произведение искусства.
+</div>
+</div>
+<div class="team-card" data-name="Марина Соловьёва" data-role="Старший бариста" data-description="Знает о кофе всё. Её капучино — лучший способ начать утро.
+" data-image="МС.jpg">
+    <div class="team-photo">
+        <img src="МС.jpg" alt="Марина Соловьёва">
+    </div>
+    <h3>Марина Соловьёва</h3>
+    <div class="role">Старший бариста</div>
+    <div class="description">Знает о кофе всё. Её капучино — лучший способ начать утро.
+</div>
+</div>
+<div class="team-card" data-name="Тимур Ахмедов" data-role="Бариста" data-description="Рисует на латте и заряжает энергией с первой чашки.
+" data-image="ТА.jpg">
+    <div class="team-photo">
+        <img src="ТА.jpg" alt="Тимур Ахмедов">
+    </div>
+    <h3>Тимур Ахмедов</h3>
+    <div class="role">Бариста</div>
+    <div class="description">Рисует на латте и заряжает энергией с первой чашки.
+</div>
+</div>            
+<div class="team-card" data-name="Игорь Петренко" data-role="Старший бармен" data-description="Авторские коктейли и идеальный апероль. Миксология — его стихия.
+" data-image="ИП.jpg">
+    <div class="team-photo">
+        <img src="ИП.jpg" alt="Игорь Петренко">
+    </div>
+    <h3>Игорь Петренко</h3>
+    <div class="role">Старший бармен</div>
+    <div class="description">Авторские коктейли и идеальный апероль. Миксология — его стихия.
+</div>
+</div>                 
+<div class="team-card" data-name="Светлана Морозова" data-role="Бармен" data-description="Создаёт напитки с душой и всегда рада удивить новым вкусом.
+" data-image="СМ.jpg">
+    <div class="team-photo">
+        <img src="СМ.jpg" alt="Светлана Морозова">
+    </div>
+    <h3>Светлана Морозова</h3>
+    <div class="role">Бармен</div>
+    <div class="description">Создаёт напитки с душой и всегда рада удивить новым вкусом.
+</div>
+</div>                 
+<div class="team-card" data-name="Евгений Власов" data-role="Сомелье" data-description="Поможет выбрать идеальное вино к ужину. Расскажет историю каждой бутылки.
+" data-image="ЕВ.jpg">
+    <div class="team-photo">
+        <img src="ЕВ.jpg" alt="Евгений Власов">
+    </div>
+    <h3>Евгений Власов</h3>
+    <div class="role">Сомелье</div>
+    <div class="description">Поможет выбрать идеальное вино к ужину. Расскажет историю каждой бутылки.
+</div>
+</div>               
+<div class="team-card" data-name="Валентина Крылова" data-role="Шеф-кондитер" data-description="Её десерты — чистый восторг. Тирамису, панна-котта и не только.
+" data-image="ВК.jpg">
+    <div class="team-photo">
+        <img src="ВК.jpg" alt="Валентина Крылова">
+    </div>
+    <h3>Валентина Крылова</h3>
+    <div class="role">Шеф-кондитер</div>
+    <div class="description">Её десерты — чистый восторг. Тирамису, панна-котта и не только.
+</div>
+</div>               
+<div class="team-card" data-name="Руслан Газизов" data-role="Пекарь" data-description="Аромат свежей чиабатты и фокаччи встречает гостей у входа. Печёт с 4 утра.
+" data-image="РГ.jpg">
+    <div class="team-photo">
+        <img src="РГ.jpg" alt="Руслан Газизов">
+    </div>
+    <h3>Руслан Газизов</h3>
+    <div class="role">Пекарь</div>
+    <div class="description">Аромат свежей чиабатты и фокаччи встречает гостей у входа. Печёт с 4 утра.
+</div>
+</div>                 
+<div class="team-card" data-name="Анна Белова" data-role="Старший официант" data-description="Координирует сервис, чтобы ваш вечер прошёл безупречно.
+" data-image="АБ.jpg">
+    <div class="team-photo">
+        <img src="АБ.jpg" alt="Анна Белова">
+    </div>
+    <h3>Анна Белова</h3>
+    <div class="role">Старший официант</div>
+    <div class="description">Координирует сервис, чтобы ваш вечер прошёл безупречно.
+</div>
+</div>              
+<div class="team-card" data-name="Кирилл Сазонов" data-role="Официант" data-description="Всегда улыбчив, внимателен и готов посоветовать любимое блюдо.
+" data-image="КС.jpg">
+    <div class="team-photo">
+        <img src="КС.jpg" alt="Кирилл Сазонов">
+    </div>
+    <h3>Кирилл Сазонов</h3>
+    <div class="role">Официант</div>
+    <div class="description">Всегда улыбчив, внимателен и готов посоветовать любимое блюдо.
+</div>
+</div>               
+<div class="team-card" data-name="Дарья Ким" data-role="Официант" data-description="Обожает свою работу и делает всё, чтобы гости возвращались снова.
+" data-image="ДКЖ.jpg">
+    <div class="team-photo">
+        <img src="ДКЖ.jpg" alt="Дарья Ким">
+    </div>
+    <h3>Дарья Ким</h3>
+    <div class="role">Официант</div>
+    <div class="description">Обожает свою работу и делает всё, чтобы гости возвращались снова.
+</div>
+</div>              
+            </div>
+        </div>
+
+    <!-- СХЕМА ЗАЛА -->
+    <div class="layout-section" id="layout">
+        <h2 class="section-title">Схема зала</h2>
+        <div class="layout-container">
+            <svg class="layout-svg" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="460" height="260" rx="20" fill="#fcf9f6" stroke="#d9cdc1" stroke-width="2"/>
+                <rect id="table-svg-1" class="table-svg" data-table-id="1" data-capacity="2" x="70" y="70" width="40" height="40" rx="6" fill="#b29782" /><text x="90" y="98" fill="white" font-size="12" text-anchor="middle">1</text>
+                <rect id="table-svg-2" class="table-svg" data-table-id="2" data-capacity="2" x="140" y="70" width="40" height="40" rx="6" fill="#b29782" /><text x="160" y="98" fill="white" font-size="12" text-anchor="middle">2</text>
+                <rect id="table-svg-3" class="table-svg" data-table-id="3" data-capacity="2" x="320" y="70" width="40" height="40" rx="6" fill="#b29782" /><text x="340" y="98" fill="white" font-size="12" text-anchor="middle">3</text>
+                <rect id="table-svg-4" class="table-svg" data-table-id="4" data-capacity="2" x="390" y="70" width="40" height="40" rx="6" fill="#b29782" /><text x="410" y="98" fill="white" font-size="12" text-anchor="middle">4</text>
+                <rect id="table-svg-5" class="table-svg" data-table-id="5" data-capacity="2" x="70" y="190" width="40" height="40" rx="6" fill="#b29782" /><text x="90" y="218" fill="white" font-size="12" text-anchor="middle">5</text>
+                <rect id="table-svg-6" class="table-svg" data-table-id="6" data-capacity="2" x="140" y="190" width="40" height="40" rx="6" fill="#b29782" /><text x="160" y="218" fill="white" font-size="12" text-anchor="middle">6</text>
+                <rect id="table-svg-7" class="table-svg" data-table-id="7" data-capacity="2" x="320" y="190" width="40" height="40" rx="6" fill="#b29782" /><text x="340" y="218" fill="white" font-size="12" text-anchor="middle">7</text>
+                <rect id="table-svg-8" class="table-svg" data-table-id="8" data-capacity="2" x="390" y="190" width="40" height="40" rx="6" fill="#b29782" /><text x="410" y="218" fill="white" font-size="12" text-anchor="middle">8</text>
+                <rect id="table-svg-9" class="table-svg" data-table-id="9" data-capacity="4" x="60" y="120" width="60" height="60" rx="8" fill="#8f6e54" /><text x="90" y="158" fill="white" font-size="14" text-anchor="middle">9</text>
+                <rect id="table-svg-10" class="table-svg" data-table-id="10" data-capacity="4" x="380" y="120" width="60" height="60" rx="8" fill="#8f6e54" /><text x="410" y="158" fill="white" font-size="14" text-anchor="middle">10</text>
+                <rect id="table-svg-11" class="table-svg" data-table-id="11" data-capacity="6" x="200" y="100" width="100" height="70" rx="10" fill="#5e4a3a" /><text x="250" y="150" fill="white" font-size="16" text-anchor="middle" font-weight="bold">11</text>
+            </svg>
+            <div class="layout-legend">
+                <div class="legend-item"><span class="legend-dot table2"></span> 2-местные (№1–8)</div>
+                <div class="legend-item"><span class="legend-dot table4"></span> 4-местные (№9–10)</div>
+                <div class="legend-item"><span class="legend-dot table6"></span> 6-местный (№11, VIP)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- КНОПКА МЕНЮ -->
+    <div style="text-align: center; margin: 40px 0 20px;">
+        <a href="menu.html" target="_blank" style="background: #5e4a3a; color: white; padding: 14px 36px; border-radius: 60px; text-decoration: none; font-size: 1.1rem; display: inline-block; box-shadow: 0 4px 12px rgba(94,58,44,0.2);">
+            <i class="fas fa-utensils"></i> Посмотреть полное меню
+        </a>
+    </div>
+
+    <!-- ФОРМА БРОНИРОВАНИЯ -->
+    <div class="booking-section" id="booking">
+        <h2 style="font-size:1.8rem; font-weight:300; color:#3f332b; margin-bottom:24px; text-align:center;">Забронировать столик</h2>
+        <form id="bookingForm" class="booking-form">
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+                <label>Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 999 123-45-67" required>
+            </div>
+            <div class="form-group" id="emailGroup">
+                <label>Email (для уведомления)</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div style="display: flex; gap: 16px;">
+                <div class="form-group" style="flex:1"><label>Дата</label><input type="date" id="date" name="date" required></div>
+                <div class="form-group" style="flex:1"><label>Время</label><input type="time" id="time" name="time" required></div>
+            </div>
+            <div class="form-group">
+                <label>Столик</label>
+                <select id="table" name="table" required>
+                    <option value="">Выберите номер столика</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Гостей</label>
+                <div class="guest-counter">
+                    <button type="button" id="decrementGuests">−</button>
+                    <span id="guestsCount">2</span>
+                    <button type="button" id="incrementGuests">+</button>
+                </div>
+            </div>
+            <button type="submit">Забронировать</button>
+            <div class="privacy-note">Нажимая кнопку «Забронировать», я даю согласие на обработку персональных данных.</div>
+        </form>
+        <div id="bookingMessage"></div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <div class="footer-contacts">
+        <div>
+            <h4>📍 Адрес</h4>
+            <p><i class="fas fa-map-pin"></i> Нижнекамск, ул. Сююмбике, 42А</p>
+            <p><i class="fas fa-phone-alt"></i> +7 (999) 777-33-11</p>
+            <p><i class="fas fa-envelope"></i> TableAlert@mail.ru</p>
+            <div style="margin-top:20px;"><a href="https://yandex.ru/maps/?text=Нижнекамск,+улица+Сююмбике+42А" target="_blank"><i class="fas fa-map-marked-alt"></i> Открыть в Яндекс.Картах</a></div>
+        </div>
+        <div>
+            <h4>⚖️ Юридическая информация</h4>
+            <p>ИП Андронова З.П.</p>
+            <p>ИНН 165123456789</p>
+            <p>ОГРНИП 320169000012345</p>
+            <p class="legal-info">© TableAlert, 2026. Все права защищены.</p>
+        </div>
+    </div>
+    <div class="footer">TableAlert · итальянское бистро · Нижнекамск</div>
+</div>
+
+<script>
+    // ---------- ВСПОМОГАТЕЛЬНЫЕ ----------
+    function smoothScroll(selector) { document.querySelector(selector).scrollIntoView({ behavior: 'smooth' }); }
+    function closeAllDropdowns() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); }
+
+    // ---------- ДРОПДАУНЫ ----------
+    document.querySelectorAll('.nav-item').forEach(item => {
+        const btn = item.querySelector('.icon-btn');
+        const dropdown = item.querySelector('.dropdown');
+        if (btn && dropdown) {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeAllDropdowns();
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item')) closeAllDropdowns();
+    });
+
+    // ---------- АВТОРИЗАЦИЯ ----------
+    const authContent = document.getElementById('authContent');
+    let currentEmail = null;
+
+    fetch('/api/auth/me')
+        .then(res => res.ok ? res.json() : null)
+        .then(user => {
+            if (user) { currentEmail = user.email; showUserPanel(); }
+            else { showAuthForm(); }
+            updateBookingFormForAuth();
+        })
+        .catch(() => { showAuthForm(); updateBookingFormForAuth(); });
+
+    function showAuthForm() {
+        authContent.innerHTML = `
+            <div class="auth-form">
+                <p style="text-align:center; margin-bottom:12px;">Вход по email</p>
+                <input type="email" id="emailInput" placeholder="your@email.com" value="">
+                <button id="sendCodeBtn">Получить код</button>
+                <div id="codeSection" style="display:none;">
+                    <div class="code-input-group">
+                        <input type="text" id="codeInput" placeholder="6-значный код">
+                        <button id="verifyCodeBtn">Войти</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        const sendBtn = document.getElementById('sendCodeBtn');
+        const emailInput = document.getElementById('emailInput');
+        const codeSection = document.getElementById('codeSection');
+        sendBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            if (!email) return alert('Введите email');
+            fetch('/api/auth/send-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            })
+            .then(res => res.json())
+            .then(() => { codeSection.style.display = 'block'; alert('Код отправлен (смотрите консоль сервера)'); });
+        });
+        document.getElementById('verifyCodeBtn')?.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const code = document.getElementById('codeInput').value.trim();
+            fetch('/api/auth/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, code })
+            })
+            .then(res => { if (res.ok) return res.json(); else throw new Error('Неверный код'); })
+            .then(() => { currentEmail = email; showUserPanel(); updateBookingFormForAuth(); })
+            .catch(err => alert(err.message));
+        });
+    }
+
+    function showUserPanel() {
+        authContent.innerHTML = `
+            <div class="user-greeting"><i class="fas fa-smile"></i><div>${currentEmail}</div></div>
+            <button id="myBookingsBtn">📋 Мои брони</button>
+            <button id="logoutBtn" class="logout-btn">🚪 Выйти</button>
+            <div id="bookingsList" style="margin-top:16px;"></div>
+        `;
+        document.getElementById('myBookingsBtn').addEventListener('click', loadMyBookings);
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            fetch('/api/auth/logout', { method: 'POST' }).then(() => {
+                currentEmail = null;
+                showAuthForm();
+                updateBookingFormForAuth();
+            });
+        });
+        updateBookingFormForAuth();
+    }
+
+    function loadMyBookings() {
+        const listDiv = document.getElementById('bookingsList');
+        listDiv.innerHTML = 'Загрузка...';
+        fetch('/api/reservations/my')
+            .then(res => res.ok ? res.json() : [])
+            .then(bookings => {
+                if (bookings.length === 0) { listDiv.innerHTML = '<p style="color:#8b7a6b;">У вас пока нет броней.</p>'; return; }
+                let html = '<div class="reservations-list">';
+                bookings.forEach(b => {
+                    const date = new Date(b.date).toLocaleDateString('ru-RU');
+                    html += `<div class="reservation-item" data-id="${b.id}"><div><strong>Стол ${b.Table.number}</strong> (${b.guestsCount} чел)<br>${date} в ${b.time}</div><button class="cancel-res-btn" onclick="cancelReservation(${b.id})">Отменить</button></div>`;
+                });
+                html += '</div>';
+                listDiv.innerHTML = html;
+            })
+            .catch(() => listDiv.innerHTML = '<p class="error">Ошибка загрузки</p>');
+    }
+
+    window.cancelReservation = function(id) {
+        if (!confirm('Отменить бронь?')) return;
+        fetch(`/api/reservations/${id}`, { method: 'DELETE' })
+            .then(res => res.ok ? loadMyBookings() : alert('Ошибка'));
+    };
+
+    function updateBookingFormForAuth() {
+        const emailField = document.getElementById('email');
+        const emailGroup = document.getElementById('emailGroup');
+        if (!emailField) return;
+        const oldNote = document.querySelector('.auth-note');
+        if (oldNote) oldNote.remove();
+        if (currentEmail) {
+            emailField.style.display = 'none';
+            emailField.required = false;
+            emailField.disabled = true;
+            const note = document.createElement('div');
+            note.className = 'auth-note';
+            note.innerHTML = `<i class="fas fa-check-circle" style="color: #5e4a3a;"></i> Вы авторизованы как <strong>${currentEmail}</strong>. Бронь привяжется к этому email.`;
+            emailGroup.appendChild(note);
+        } else {
+            emailField.style.display = 'block';
+            emailField.required = true;
+            emailField.disabled = false;
+        }
+    }
+
+    // ---------- БРОНИРОВАНИЕ ----------
+    const tableSelect = document.getElementById('table');
+    fetch('/api/tables')
+        .then(res => res.json())
+        .then(tables => {
+            tables.sort((a,b) => a.number - b.number);
+            tables.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = `Стол №${t.number} (${t.capacity} мест) — ${t.description || ''}`;
+                opt.setAttribute('data-capacity', t.capacity);
+                tableSelect.appendChild(opt);
+            });
+        });
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+
+    let guests = 2;
+    document.getElementById('guestsCount').textContent = guests;
+    document.getElementById('decrementGuests').addEventListener('click', () => { if (guests > 1) { guests--; document.getElementById('guestsCount').textContent = guests; } });
+    document.getElementById('incrementGuests').addEventListener('click', () => { guests++; document.getElementById('guestsCount').textContent = guests; });
+
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const selectedDate = document.getElementById('date').value;
+        const selectedTime = document.getElementById('time').value;
+        const tableId = tableSelect.value;
+        const msgDiv = document.getElementById('bookingMessage');
+
+        if (!tableId) { msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Выберите столик.</div>`; return; }
+        const now = new Date();
+        const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
+        if (selectedDateTime < now) { msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Нельзя забронировать на прошедшую дату или время.</div>`; return; }
+        const minAllowedTime = new Date(now.getTime() + 30 * 60000);
+        if (selectedDateTime < minAllowedTime) { msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Бронирование доступно минимум за 30 минут.</div>`; return; }
+
+        const selected = tableSelect.selectedOptions[0];
+        const capacity = parseInt(selected.dataset.capacity);
+        if (guests > capacity) { msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Стол вмещает только ${capacity} гостей.</div>`; return; }
+
+        const data = {
+            tableId,
+            customerName: document.getElementById('name').value,
+            customerPhone: document.getElementById('phone').value,
+            date: selectedDate,
+            time: selectedTime,
+            guestsCount: guests
+        };
+        const emailField = document.getElementById('email');
+        if (emailField.style.display !== 'none') { data.customerEmail = emailField.value; }
+
+        msgDiv.innerHTML = '';
+        try {
+            const res = await fetch('/api/reservations', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const result = await res.json();
+            if (res.ok) {
+                msgDiv.innerHTML = `<div class="message success"><i class="fas fa-check-circle"></i> Бронь подтверждена! Письмо отправлено.</div>`;
+                e.target.reset();
+                guests = 2;
+                document.getElementById('guestsCount').textContent = guests;
+            } else {
+                msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Ошибка: ${result.error || 'Неизвестная ошибка'}</div>`;
+            }
+        } catch {
+            msgDiv.innerHTML = `<div class="message error"><i class="fas fa-exclamation-triangle"></i> Ошибка соединения с сервером.</div>`;
+        }
+    });
+
+    // ---------- МОДАЛЬНОЕ ОКНО ДЛЯ КОМАНДЫ ----------
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalDesc = document.getElementById('modalDesc');
+    const closeModal = document.querySelector('.modal-close');
+
+    function openModal(name, role, description, imageSrc) {
+        modalName.textContent = name;
+        modalRole.textContent = role;
+        modalDesc.textContent = description;
+        modalImg.src = imageSrc;
+        modal.style.display = 'flex';
+    }
+    closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+    document.querySelectorAll('.team-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const name = card.getAttribute('data-name');
+            const role = card.getAttribute('data-role');
+            const desc = card.getAttribute('data-description');
+            const img = card.getAttribute('data-image');
+            if (name && role && desc && img) openModal(name, role, desc, img);
+        });
+    });
+
+    // ---------- ИНТЕРАКТИВНАЯ СХЕМА ЗАЛА ----------
+    const svgContainer = document.querySelector('.layout-svg');
+    const datePicker = document.getElementById('date');
+    const timePicker = document.getElementById('time');
+    const tablesRects = Array.from(svgContainer.querySelectorAll('rect[data-table-id]'));
+
+    async function updateTablesAvailability() {
+        const date = datePicker.value;
+        const time = timePicker.value;
+        if (!date || !time) {
+            tablesRects.forEach(rect => {
+                const cap = parseInt(rect.getAttribute('data-capacity') || 2);
+                rect.style.fill = cap <= 2 ? '#b29782' : (cap === 4 ? '#8f6e54' : '#5e4a3a');
+                rect.style.cursor = 'pointer';
+                rect.setAttribute('data-available', 'true');
+                rect.style.stroke = 'none';
+            });
+            return;
+        }
+        try {
+            const resp = await fetch(`/api/tables/availability?date=${date}&time=${time}`);
+            const avail = await resp.json();
+            tablesRects.forEach(rect => {
+                const id = rect.getAttribute('data-table-id');
+                const isAvail = avail[id];
+                const cap = parseInt(rect.getAttribute('data-capacity') || 2);
+                if (isAvail === false) {
+                    rect.style.fill = '#d9cdc1';
+                    rect.style.cursor = 'not-allowed';
+                    rect.setAttribute('data-available', 'false');
+                } else {
+                    rect.style.fill = cap <= 2 ? '#b29782' : (cap === 4 ? '#8f6e54' : '#5e4a3a');
+                    rect.style.cursor = 'pointer';
+                    rect.setAttribute('data-available', 'true');
+                }
+            });
+        } catch (err) { console.error('Ошибка проверки доступности', err); }
+    }
+    datePicker.addEventListener('change', updateTablesAvailability);
+    timePicker.addEventListener('change', updateTablesAvailability);
+    updateTablesAvailability();
+
+    tablesRects.forEach(rect => {
+        rect.addEventListener('click', () => {
+            const tableId = rect.getAttribute('data-table-id');
+            const isAvailable = rect.getAttribute('data-available') === 'true';
+            const date = datePicker.value;
+            const time = timePicker.value;
+            if (!date || !time) alert('Пожалуйста, сначала выберите дату и время для бронирования.');
+            else if (!isAvailable) { alert('Этот стол уже занят на выбранное время.'); return; }
+            const option = tableSelect.querySelector(`option[value="${tableId}"]`);
+            if (option) {
+                tableSelect.value = tableId;
+                tablesRects.forEach(r => r.style.stroke = 'none');
+                rect.style.stroke = '#5e4a3a';
+                rect.style.strokeWidth = '3';
+            } else console.warn(`Опция для стола ${tableId} не найдена`);
+        });
+    });
+    tableSelect.addEventListener('change', () => tablesRects.forEach(r => r.style.stroke = 'none'));
+</script>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <div class="modal-info">
+            <h3 id="modalName"></h3>
+            <div class="role" id="modalRole"></div>
+            <div class="description" id="modalDesc"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
