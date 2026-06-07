@@ -89,19 +89,20 @@ exports.createReservation = async (req, res) => {
     });
 
     // Отправляем email
-    await sendEmailNotification({
-      to: email,
-      subject: 'Подтверждение бронирования столика',
-      html: `<p>Уважаемый(ая) ${customerName},</p>
-             <p>Ваш столик №${table.number} на ${date} в ${time} успешно забронирован.</p>
-             <p>Спасибо, что выбрали наше кафе!</p>`,
-    });
+  // Отправляем email в фоне
+sendEmailNotification({
+  to: email,
+  subject: 'Подтверждение бронирования столика',
+  html: `...`,
+}).catch(console.error);
 
-    // Отправляем SMS
-    await smsService.sendSms({
-      to: customerPhone,
-      message: `TableAlert: столик №${table.number} забронирован на ${date} в ${time}. Ждём вас!`
-    });
+// Отправляем SMS в фоне
+smsService.sendSms({
+  to: customerPhone,
+  message: `...`,
+}).catch(console.error);
+
+  
 
     broadcastUpdate('new_reservation', reservation);
 

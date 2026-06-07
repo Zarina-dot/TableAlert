@@ -9,14 +9,14 @@ exports.sendCode = async (req, res) => {
   if (!email) return res.status(400).json({ error: 'Email обязателен' });
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   verificationCodes[email] = code;
-  await sendEmailNotification({
-    to: email,
-    subject: 'Код подтверждения TableAlert',
-    html: `<p>Ваш код подтверждения: <strong>${code}</strong></p>`
-  });
-  res.json({ message: 'Код отправлен на email' });
-};
-
+ // Отправляем письмо в фоне, не дожидаясь ответа
+sendEmailNotification({
+  to: email,
+  subject: 'Код подтверждения TableAlert',
+  html: `<p>Ваш код подтверждения: <strong>${code}</strong></p>`,
+}).catch(console.error); // ошибку логируем, но не блокируем ответ
+res.json({ message: 'Код отправлен (смотрите консоль сервера)' });
+}
 exports.verifyCode = (req, res) => {
   const { email, code } = req.body;
   if (!email || !code) return res.status(400).json({ error: 'Email и код обязательны' });
