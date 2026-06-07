@@ -123,6 +123,9 @@
         }
         rect[data-table-id][data-available="true"]:hover { filter: brightness(0.95); transition: 0.1s; }
         rect[data-table-id][data-available="false"] { cursor: not-allowed; }
+        .status-active { color: #2f5e3f; font-weight: 500; }
+.status-cancelled { color: #a5433a; font-weight: 500; }
+.status-completed { color: #8b7a6b; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -422,15 +425,24 @@
     // ---------- АВТОРИЗАЦИЯ ----------
     const authContent = document.getElementById('authContent');
     let currentEmail = null;
+    let currentIsAdmin = false;
 
     fetch('/api/auth/me')
-        .then(res => res.ok ? res.json() : null)
-        .then(user => {
-            if (user) { currentEmail = user.email; showUserPanel(); }
-            else { showAuthForm(); }
-            updateBookingFormForAuth();
-        })
-        .catch(() => { showAuthForm(); updateBookingFormForAuth(); });
+    .then(res => res.ok ? res.json() : null)
+    .then(user => {
+        if (user) {
+            currentEmail = user.email;
+            currentIsAdmin = user.isAdmin || false;
+            showUserPanel();
+        } else {
+            showAuthForm();
+        }
+        updateBookingFormForAuth();
+    })
+    .catch(() => {
+        showAuthForm();
+        updateBookingFormForAuth();
+    });
 
     function showAuthForm() {
         authContent.innerHTML = `
@@ -474,23 +486,31 @@
         });
     }
 
-    function showUserPanel() {
-        authContent.innerHTML = `
-            <div class="user-greeting"><i class="fas fa-smile"></i><div>${currentEmail}</div></div>
-            <button id="myBookingsBtn">📋 Мои брони</button>
-            <button id="logoutBtn" class="logout-btn">🚪 Выйти</button>
-            <div id="bookingsList" style="margin-top:16px;"></div>
-        `;
-        document.getElementById('myBookingsBtn').addEventListener('click', loadMyBookings);
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            fetch('/api/auth/logout', { method: 'POST' }).then(() => {
-                currentEmail = null;
-                showAuthForm();
-                updateBookingFormForAuth();
-            });
-        });
-        updateBookingFormForAuth();
+   function showUserPanel() {
+    authContent.innerHTML = `
+        <div class="user-greeting">
+            <i class="fas fa-smile"></i>
+            <div>${currentEmail}</div>
+        </div>
+        <button id="myBookingsBtn">📋 Мои брони</button>
+        ${currentIsAdmin ? '<button id="allBookingsBtn">🔐 Все брони (админ)</button>' : ''}
+        <button id="logoutBtn" class="logout-btn">🚪 Выйти</button>
+        <div id="bookingsList" style="margin-top:16px;"></div>
+    `;
+    document.getElementById('myBookingsBtn').addEventListener('click', loadMyBookings);
+    if (currentIsAdmin) {
+        document.getElementById('allBookingsBtn').addEventListener('click', loadAllBookings);
     }
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        fetch('/api/auth/logout', { method: 'POST' }).then(() => {
+            currentEmail = null;
+            currentIsAdmin = false;
+            showAuthForm();
+            updateBookingFormForAuth();
+        });
+    });
+    updateBookingFormForAuth();
+}
 
     function loadMyBookings() {
         const listDiv = document.getElementById('bookingsList');
@@ -509,6 +529,55 @@
             })
             .catch(() => listDiv.innerHTML = '<p class="error">Ошибка загрузки</p>');
     }
+    function loadAllBookings() {
+    const listDiv = document.getElementById('bookingsList');
+    listDiv.innerHTML = 'Загрузка...';
+    fetch('/api/reservations')
+        .then(res => {
+            if (res.status === 403) throw new Error('Нет прав администратора');
+            if (!res.ok) throw new Error('Ошибка загрузки');
+            return res.json();
+        })
+        .then(bookings => {
+            if (bookings.length === 0) {
+                listDiv.innerHTML = '<p style="color:#8b7a6b;">Броней нет.</p>';
+                return;
+            }
+            const today = new Date().toISOString().split('T')[0];
+            let html = '<div class="reservations-list">';
+            bookings.forEach(b => {
+                const date = new Date(b.date).toLocaleDateString('ru-RU');
+                let statusText = '';
+                let statusClass = '';
+                if (b.status === 'cancelled') {
+                    statusText = '❌ Отменена';
+                    statusClass = 'status-cancelled';
+                } else if (b.date < today) {
+                    statusText = '✅ Завершена';
+                    statusClass = 'status-completed';
+                } else {
+                    statusText = '🟢 Активна';
+                    statusClass = 'status-active';
+                }
+                html += `
+                    <div class="reservation-item" data-id="${b.id}">
+                        <div>
+                            <strong>Стол ${b.Table.number}</strong> (${b.guestsCount} чел)<br>
+                            ${date} в ${b.time}<br>
+                            <span class="${statusClass}">${statusText}</span>
+                        </div>
+                        <button class="cancel-res-btn" onclick="cancelReservation(${b.id})">Отменить</button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            listDiv.innerHTML = html;
+        })
+        .catch(err => {
+            console.error(err);
+            listDiv.innerHTML = `<p class="error">${err.message}</p>`;
+        });
+}
 
     window.cancelReservation = function(id) {
         if (!confirm('Отменить бронь?')) return;

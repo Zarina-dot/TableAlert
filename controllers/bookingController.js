@@ -145,8 +145,14 @@ exports.cancelReservation = async (req, res) => {
 
 // Получить все брони (для администратора)
 exports.getAllReservations = async (req, res) => {
+  if (!req.session.isAdmin) {
+    return res.status(403).json({ error: 'Доступ запрещён. Только для администратора.' });
+  }
   try {
-    const reservations = await Reservation.findAll({ include: Table });
+    const reservations = await Reservation.findAll({ 
+      include: Table,
+      order: [['date', 'DESC'], ['time', 'DESC']]
+    });
     res.json(reservations);
   } catch (error) {
     res.status(500).json({ error: error.message });
