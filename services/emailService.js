@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // true для 465, false для 587
   auth: {
-    user: '6lil6zi6@@gmail.com',   // замените на свой email
+    user: '6lil6zi6@gmail.com',   // замените на свой email
     pass: 'nnkdwypxymmfkbgb',       // замените на пароль приложения
   },
 });
