@@ -2,7 +2,7 @@
 const { sendEmailNotification } = require('../services/emailService');
 
 const verificationCodes = {}; // email -> code
-const ADMIN_EMAIL = 'admin@tablealert.ru';   // ← админский email
+const ADMIN_EMAIL = '6lil6zi6@gmail.com';   // ← админский email
 
 exports.sendCode = async (req, res) => {
   const { email } = req.body;
